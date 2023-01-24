@@ -1,7 +1,4 @@
-from manim import *
-from manim.opengl import *
-from icra_supplementary import *
-from icra_functions import *
+from functions_durgesh.icra_functions import *
 
 
 class MakeTitle(Scene):
@@ -14,7 +11,7 @@ class MakeTitle(Scene):
                            r"$^3$ Robotics Innovation Center, DFKI GmbH, Bremen, Germany \\"
                            r"$^4$ Universita Degli Studi di Genova, Italy").next_to(authors, DOWN).scale(0.45)
         # icra_L = ImageMobject("icra_logo2.png").scale(0.1).move_to([-5, 2.5, 0])
-        icra_L = ImageMobject("cfm_logo.png").scale(0.8).move_to([0, 2.5, 0])
+        icra_L = ImageMobject("pics_fileSpecific/cfm_logo.png").scale(0.8).move_to([0, 2.5, 0])
 
         self.add(*[iter2 for iter2 in [title, authors, icra_L, affiliations]])
         self.wait(17)
@@ -87,7 +84,7 @@ class Slide2(Scene):
         endo = Tex("Endoscope", font_size=36).move_to(arrow1.get_end() + DOWN * 0.5)
         micro = Tex("Microscope", font_size=36).move_to(arrow2.get_end() + DOWN * 0.5)
         ## First Figure
-        endo_img1 = ImageMobject("endo_proximity.png").scale(0.4).shift(LEFT * 2 + DOWN)
+        endo_img1 = ImageMobject("pics_fileSpecific/endo_proximity.png").scale(0.4).shift(LEFT * 2 + DOWN)
         endo_img1_cap = Tex(r"Better proximity to \\the operating area", font_size=28).move_to(
             endo_img1.get_bottom() + DOWN * 0.5)
         endo_img1F = Group(endo_img1_cap, endo_img1)
@@ -97,21 +94,21 @@ class Slide2(Scene):
         micro_img1F = Group(micro_img1, micro_img1_cap)
 
         ## Second Figure
-        endo_img2 = ImageMobject("endo_view.png").scale(0.4).shift(LEFT * 2 + DOWN)
+        endo_img2 = ImageMobject("pics_fileSpecific/endo_view.png").scale(0.4).shift(LEFT * 2 + DOWN)
         endo_img2_cap = Tex(r"Close view to\\the operating area ", font_size=28).move_to(
             endo_img2.get_bottom() + DOWN * 0.5)
         endo_img2F = Group(endo_img2_cap, endo_img2)
-        micro_img2 = ImageMobject("micro_view2.png").scale(1).shift(RIGHT * 2 + DOWN)
+        micro_img2 = ImageMobject("pics_fileSpecific/micro_view2.png").scale(1).shift(RIGHT * 2 + DOWN)
         micro_img2_cap = Tex(r"View through a funnel", font_size=28).move_to(
             micro_img2.get_bottom() + DOWN * 0.5)
         micro_img2F = Group(micro_img2, micro_img2_cap)
 
         ## Third Figure
-        endo_img3 = ImageMobject("endo_proximity.png").scale(0.4).shift(LEFT * 2 + DOWN)
+        endo_img3 = ImageMobject("pics_fileSpecific/endo_proximity.png").scale(0.4).shift(LEFT * 2 + DOWN)
         endo_img3_cap = Tex(r"Limited to 1 instrument\\ at a time ", font_size=28).move_to(
             endo_img3.get_bottom() + DOWN * 0.5)
         endo_img3F = Group(endo_img3_cap, endo_img3)
-        micro_img3 = ImageMobject("micro_2hands.png").scale(0.45).shift(RIGHT * 2 + DOWN)
+        micro_img3 = ImageMobject("pics_fileSpecific/micro_2hands.png").scale(0.45).shift(RIGHT * 2 + DOWN)
         micro_img3_cap = Tex(r"Both hands available \\for operating", font_size=28).move_to(
             micro_img3.get_bottom() + DOWN * 0.5)
         micro_img3F = Group(micro_img3, micro_img3_cap)
@@ -453,8 +450,8 @@ class Slide7(Scene):
         point1 = get_item(input_point, 36).next_to(point0, DOWN * 1.5)
         point2 = get_item(input_point2, 36).next_to(point1, DOWN * 1.5)
 
-        img1 = ImageMobject("mannequinendo2.png").scale(2).shift(DOWN + LEFT * 4)
-        img2 = ImageMobject("renderings.png").scale(0.6).shift(DOWN + RIGHT * 4)
+        img1 = ImageMobject("pics_fileSpecific/mannequinendo2.png").scale(2).shift(DOWN + LEFT * 4)
+        img2 = ImageMobject("pics_fileSpecific/renderings.png").scale(0.6).shift(DOWN + RIGHT * 4)
 
         self.play(FadeIn(point0))
         self.wait(2)
@@ -529,7 +526,7 @@ class Results1(Scene):
     def construct(self):
         self.add(*get_Background("Results : rewarding strategies"))
         sub_t = Tex("Results for binary reward strategy").shift(UP * 2.7)
-        img1 = ImageMobject("binary_results.png").scale(0.16).next_to(sub_t, DOWN)
+        img1 = ImageMobject("pics_fileSpecific/binary_results.png").scale(0.16).next_to(sub_t, DOWN)
         bg_fill = BackgroundRectangle(img1, fill_color=WHITE, fill_opacity=1)
         img1_cap = Tex(
             r"Blank space:", r" Feasible workspace\\", "Circle:", r" Desired RDW \\", "Colored points:",
@@ -550,7 +547,7 @@ class Results2(Scene):
     def construct(self):
         self.add(*get_Background("Results : rewarding strategies"))
         sub_t = Tex("Results for center biased reward strategy").shift(UP * 2.7)
-        img1 = ImageMobject("biased_results.png").scale(0.16).next_to(sub_t, DOWN)
+        img1 = ImageMobject("pics_fileSpecific/biased_results.png").scale(0.16).next_to(sub_t, DOWN)
         bg_fill = BackgroundRectangle(img1, fill_color=WHITE, fill_opacity=1)
         img1_cap = Tex(
             r"Blank space:", r" Feasible workspace\\", "Circle:", r" Desired RDW \\", "Colored points:",
@@ -571,7 +568,7 @@ class Results3(Scene):
     def construct(self):
         self.add(*get_Background("Results : rewarding strategies"))
         sub_t = Tex("Results for minimum quality constraint reward strategy").shift(UP * 2.7)
-        img1 = ImageMobject("minqual_results.png").scale(0.16).next_to(sub_t, DOWN)
+        img1 = ImageMobject("pics_fileSpecific/minqual_results.png").scale(0.16).next_to(sub_t, DOWN)
         bg_fill = BackgroundRectangle(img1, fill_color=WHITE, fill_opacity=1)
         img1_cap = Tex(
             r"Blank space:", r" Feasible workspace\\", "Circle:", r" Desired RDW \\", "Colored points:",
@@ -679,7 +676,7 @@ class Feedback3(Scene):
 class Feedback_Result(Scene):
     def construct(self):
         self.add(*get_Background("Feedback from surgeons"))
-        feedback_image = ImageMobject("priority.png").scale(0.6).shift(DOWN)
+        feedback_image = ImageMobject("pics_fileSpecific/priority.png").scale(0.6).shift(DOWN)
         point1 = Tex("Answers about priority features of the surgical robot").align_on_border(UP * 3)
 
         self.play(FadeIn(point1))
@@ -691,7 +688,7 @@ class Feedback_Result(Scene):
 class Feedback_Result(Scene):
     def construct(self):
         self.add(*get_Background("Results : Feedback from surgeons"))
-        feedback_image = ImageMobject("priority.png").scale(0.6).shift(DOWN)
+        feedback_image = ImageMobject("pics_fileSpecific/priority.png").scale(0.6).shift(DOWN)
         point1 = Tex("Answers about priority features of the surgical robot").align_on_border(UP * 3)
 
         self.play(FadeIn(point1))

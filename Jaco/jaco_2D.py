@@ -1,10 +1,8 @@
-import numpy as np
-from manim import *
-
-from robot_functions import make_paths
-from maple_functions import *
-from icra_functions import *
+from functions_durgesh.robot_functions import make_paths
+from functions_durgesh.maple_functions import *
+from functions_durgesh.icra_functions import *
 import pandas as pd
+from manim.utils.color import GREEN, GOLD_A
 
 
 class MakeTitle(Scene):
@@ -14,9 +12,8 @@ class MakeTitle(Scene):
                       r"Philippe Wenger$^1$").next_to(title, DOWN).scale(0.6)
         affiliations = Tex(r"$^1$ Laboratoire des Sciences du Numerique de Nantes, France").next_to(authors,
                                                                                                     DOWN).scale(0.45)
-        # icra_L = ImageMobject("icra_logo2.png").scale(0.1).move_to([-5, 2.5, 0])
-        icra_L = ImageMobject("icra23_logo.png").scale(0.8).move_to([-2, 2.5, 0])
-        ls2n = ImageMobject("ls2n_logo.png").scale(0.2).move_to([2, 2.5, 0])
+        icra_L = ImageMobject("pics/icra23_logo.png").scale(0.8).move_to([-2, 2.5, 0])
+        ls2n = ImageMobject("pics/ls2n_logo.png").scale(0.2).move_to([2, 2.5, 0])
 
         self.add(*[iter2 for iter2 in [title, authors, icra_L, affiliations, ls2n]])
         self.wait()
@@ -26,7 +23,7 @@ class MakeTitle(Scene):
         bottom_line = Line(start=[-7, -3.5, 0], end=[7, -3.5, 0], stroke_width=0.5)
         top_line = Line(start=[-7, 3.2, 0], end=[7, 3.2, 0], stroke_width=0.5)
         icra_L2 = icra_L.copy().scale(0.4).move_to([-6, 3.5, 0])
-        ls2n2 = ImageMobject("ls2n_logo.png").scale(0.1).move_to([6, 3.5, 0])
+        ls2n2 = ImageMobject("pics/ls2n_logo.png").scale(0.1).move_to([6, 3.5, 0])
         self.play(*[FadeOut(k) for k in [authors, affiliations]])
         self.play(*[Transform(k, j) for k, j in zip([title, icra_L, ls2n], [bottom_title, icra_L2, ls2n2])],
                   Create(top_line),
@@ -42,9 +39,9 @@ class Contents(Scene):
         # object definition
         toc = Tex("\\begin{itemize} \\item Cuspidality analysis of JACO robot (Gen 2, no-wrist)\\end{itemize}",
                   "\\begin{itemize} \\item Nonsingular change of solutions in JACO robot\end{itemize}",
-                  "\\begin{itemize} \\item Repeatable and nonrepeatable paths in JACO robot\\end{itemize}",
-                  "\\begin{itemize} \\item Issues in trajectory planning of \\emph{cuspidal} serial robots\\end{itemize}").scale(
-            0.8).shift(UP * 1.5)
+                  "\\begin{itemize} \\item Repeatable and non repeatable paths in JACO robot\\end{itemize}",
+                  "\\begin{itemize} \\item Issues in trajectory planning of \\emph{cuspidal} serial robots\\"
+                  "end{itemize}").scale(0.8).shift(UP * 1.5)
 
         # animations
         self.add(*get_Background("Table of Contents"))
@@ -65,8 +62,8 @@ class Definition(Scene):
             r"""\begin{minipage}{8 cm} \centering $\rightarrow$ There are no joint limits \end{minipage}""",
             font_size=36).next_to(ans, DOWN)
         assumption2 = Tex(
-            r"""\begin{minipage}{8 cm} \centering $\rightarrow$ Collision constraints are not considered \end{minipage}""",
-            font_size=36).next_to(assumption1, DOWN)
+            r"""\begin{minipage}{8 cm} \centering $\rightarrow$ Collision constraints are 
+            not considered \end{minipage}""", font_size=36).next_to(assumption1, DOWN)
 
         # animations
         self.add(*get_Background("Definition"))
@@ -79,10 +76,10 @@ class Definition(Scene):
         self.wait()
 
 
-def time_dot(year, y_str, dir=UP):
+def time_dot(year, y_str, direction=UP):
     mov_vec = -6 + 12 * (year - 1986) / (2022 - 1986)
     dot_ins = Dot(color=GREEN).move_to([mov_vec, 1, 0]).scale(2)
-    ys = Tex(y_str).scale(0.8).next_to(dot_ins, dir)
+    ys = Tex(y_str).scale(0.8).next_to(dot_ins, direction)
 
     return Group(dot_ins, ys)
 
@@ -102,53 +99,53 @@ class Timeline(Scene):
         # Borrel
         borrel_dot = time_dot(1986, "'86")
         borrel_cross = Cross().move_to(borrel_dot).scale(0.3).shift(DOWN * 0.3)
-        assumption = BoxedText(r"""\begin{minipage}{8 cm} \centering It was assumed that all the inverse kinematc solutions of a robot 
-                belong to seperate aspects \end{minipage}""").shift(DOWN * 2)
-        borrels_proof = BoxedText(r"""\begin{minipage}{8 cm} \centering Borrel and Liegeois presented a formal proof of the same 
-                \end{minipage}""").shift(DOWN * 2)
+        assumption = BoxedText(r"""\begin{minipage}{8 cm} \centering It was assumed that all the inverse kinematic 
+        solutions of a robot belong to separate aspects \end{minipage}""").shift(DOWN * 2)
+        borrels_proof = BoxedText(r"""\begin{minipage}{8 cm} \centering Borrel and Liegeois presented a formal 
+        proof of the same \end{minipage}""").shift(DOWN * 2)
         borrel_banner = Tex("\\emph{Borrel}").scale(0.8).next_to(borrel_dot, UP * 1.5)
 
         # Vincenzo-Parenti Castelli
         vpc_dot = time_dot(1988, "'88", DOWN)
-        vpc_proof = BoxedText(r"""\begin{minipage}{8 cm} \centering Vincenzo Parenti-Castelli and Carlo Innocenti presented a 
-                counterexample discrediting the existing proof \end{minipage}""").shift(DOWN * 2)
-        burdick_proof = BoxedText(r"""\begin{minipage}{8 cm} \centering Burdick presented results in 3R serial robots 
-                \end{minipage}""").shift(DOWN * 2)
+        vpc_proof = BoxedText(r"""\begin{minipage}{8 cm} \centering Vincenzo Parenti-Castelli and Carlo Innocenti 
+        presented a counterexample discrediting the existing proof \end{minipage}""").shift(DOWN * 2)
+        # burdick_proof = BoxedText(r"""\begin{minipage}{8 cm} \centering Burdick presented results in 3R serial robots
+        #         \end{minipage}""").shift(DOWN * 2)
         vpc_banner = Tex("\\emph{Parenti \\\\ Castelli}").scale(0.8).next_to(vpc_dot, DOWN * 1.5)
 
         # Philippe
         pw_dot = time_dot(1992, "'92")
-        philippe_ud = BoxedText(r"""\begin{minipage}{8 cm} \centering Uniqueness domains and characteristic surfaces are defined: Wenger. P.
-                 \end{minipage}""").shift(DOWN * 2)
+        philippe_ud = BoxedText(r"""\begin{minipage}{8 cm} \centering Uniqueness domains and characteristic 
+        surfaces are defined: Wenger. P. \end{minipage}""").shift(DOWN * 2)
         wenger_banner = Tex("\\emph{Wenger}").scale(0.8).next_to(pw_dot, UP * 1.5)
         pw_dot2 = time_dot(1995, "'95", DOWN)
-        philippe_cr = BoxedText(r"""\begin{minipage}{8 cm} \centering Term 'cuspidal' robots is defined owing to the existence of a
-                 cusp point in the workspace of such robots : Wenger et.al.\end{minipage}""").shift(DOWN * 2)
+        philippe_cr = BoxedText(r"""\begin{minipage}{8 cm} \centering Term 'cuspidal' robots is defined owing to the 
+        existence of a cusp point in the workspace of such robots : Wenger et.al.\end{minipage}""").shift(DOWN * 2)
         omri_banner = Tex("\\emph{El Omri}").scale(0.8).next_to(pw_dot2, DOWN * 1.5)
 
         # Baili
         baili_dot = time_dot(2004, "'04")
-        baili_contr = BoxedText(r"""\begin{minipage}{8 cm} \centering Extensive analysis and classification of 3R 'orthogonal' 
-                robots is presented: Baili. M. et al. \end{minipage}""").shift(DOWN * 2)
+        baili_contr = BoxedText(r"""\begin{minipage}{8 cm} \centering Extensive analysis and classification of 3R 
+        'orthogonal' robots is presented: Baili. M. et al. \end{minipage}""").shift(DOWN * 2)
         baili_banner = Tex("\\emph{Baili}").scale(0.8).next_to(baili_dot, UP * 1.5)
 
         # Corvez
         corvez_dot = time_dot(2005, "'05", DOWN)
-        corvez_contr = BoxedText(r"""\begin{minipage}{8 cm} \centering Cusp point as a sufficient condition for a generic 3R serial 
-                robot is established : Corvez. S. et al.\end{minipage}""").shift(DOWN * 2)
+        corvez_contr = BoxedText(r"""\begin{minipage}{8 cm} \centering Cusp point as a sufficient condition 
+        for a generic 3R serial robot is established : Corvez. S. et al.\end{minipage}""").shift(DOWN * 2)
         corvez_banner = Tex("\\emph{Corvez}").scale(0.8).next_to(corvez_dot, DOWN * 1.5)
 
         # Capco
         capco_dot = time_dot(2020, "'20")
-        capco_contr = BoxedText(r"""\begin{minipage}{8 cm} \centering Non cuspidal properties of UR5 are proven using computer 
-                algebraic tools : Capco et al. \end{minipage}""").shift(DOWN * 2)
+        capco_contr = BoxedText(r"""\begin{minipage}{8 cm} \centering Non cuspidal properties of UR5 are 
+        proven using computer algebraic tools : Capco et al. \end{minipage}""").shift(DOWN * 2)
         capco_banner = Tex("\\emph{Capco}").scale(0.8).next_to(capco_dot, UP * 1.5)
 
         # Salunkhe
         durghy_dot = time_dot(2021, "'22", DOWN)
         durghy_contr = BoxedText(r"""\begin{minipage}{8 cm} \centering Necessary and sufficient condition for generic 3R
-                 serial robot was proved along with existence of reduced aspects : Salunkhe et al. \end{minipage}""").shift(
-            DOWN * 2)
+                 serial robot was proved along with existence of reduced aspects : Salunkhe 
+                 et al. \end{minipage}""").shift(DOWN * 2)
         durghy_banner = Tex("\\emph{Salunkhe}").scale(0.8).next_to(durghy_dot, DOWN * 1.5)
 
         # Prebet
@@ -221,8 +218,9 @@ class Fancy(Scene):
 class Achille(Scene):
     def construct(self):
         # object definition
-        achille_caption = Tex(r"""\begin{minipage}{10 cm} \centering Trajectory planning failure in real world applications \\ (Video Credits: Achille Verheyes, achille0.medium.com) 
-        \end{minipage}""", font_size=36).shift(DOWN * 3)
+        achille_caption = Tex(r"""\begin{minipage}{10 cm} \centering Trajectory planning failure in real world 
+        applications \\ (Video Credits: Achille Verheyes, achille0.medium.com) \end{minipage}""",
+                              font_size=36).shift(DOWN * 3)
 
         # animations
         self.add(*get_Background("Real world implementation"))
@@ -260,7 +258,6 @@ class PosPlot(Scene):
         plane2.add(x_label2, y_label2)
         # plane2.shift(LEFT*path_length/2)
 
-        full_path = []
         full_path2 = []
         paths = make_paths(df_n)
 
@@ -309,40 +306,45 @@ class PosPlot(Scene):
                     LEFT * path_length / 2))
 
         four_choices = Tex(
-            r"""\begin{minipage}{7 cm}\centering We have 4 IKS in the same aspect and we can start the trajectory from any one of them \end{minipage}""")
+            r"""\begin{minipage}{7 cm}\centering We have 4 IKS in the same aspect and we can start the trajectory 
+            from any one of them \end{minipage}""")
         first_choice = Tex(
             r"""\begin{minipage}{7 cm} \centering Let us start with IKS corresponding to $T_3$\end{minipage}""").shift(
             UP * 1.5)
         zeroth_problem = Tex(
-            r"""\begin{minipage}{7 cm} \centering The path exits from a region with 8 IKS to enter a region with 6 IKS and thus lose 2 IKS (1 in each aspect) \end{minipage}""")
+            r"""\begin{minipage}{7 cm} \centering The path exits from a region with 8 IKS to enter a region with 
+            6 IKS and thus lose 2 IKS (1 in each aspect) \end{minipage}""")
         zp_bkg = BackgroundRectangle(zeroth_problem, fill_opacity=1)
         zp_present = Group(zp_bkg, zeroth_problem)
         first_problem = Tex(
-            r"""\begin{minipage}{7 cm}We do not have a continuous path beyond this point and a sudden jump to any other paths in the same aspect will take place \end{minipage}""")
+            r"""\begin{minipage}{7 cm}We do not have a continuous path beyond this point and a sudden jump 
+            to any other paths in the same aspect will take place \end{minipage}""")
         fp_bkg = BackgroundRectangle(first_problem, fill_opacity=1)
         fp_present = Group(fp_bkg, first_problem)
 
         zeroth_problem2 = Tex(
-            r"""\begin{minipage}{7 cm} \centering The path exits from a region with 6 IKS to enter a region with 4 IKS and further loses 2 IKS (1 in each aspect) \end{minipage}""")
+            r"""\begin{minipage}{7 cm} \centering The path exits from a region with 6 IKS to enter a region with 4 
+            IKS and further loses 2 IKS (1 in each aspect) \end{minipage}""")
         zp_bkg2 = BackgroundRectangle(zeroth_problem2, fill_opacity=1)
         zp_present2 = Group(zp_bkg2, zeroth_problem2)
         second_choice = Tex(
             r"""\begin{minipage}{7 cm} \centering Let us start with IKS corresponding to $T_7$\end{minipage}""").shift(
             UP * 1.5)
         second_problem = Tex(
-            r"""\begin{minipage}{10 cm}Same problem is encountered at this point and a sudden jump to any other paths with a solution at next instance will take place \end{minipage}""")
+            r"""\begin{minipage}{10 cm}Same problem is encountered at this point and a sudden jump 
+            to any other paths with a solution at next instance will take place \end{minipage}""")
         sp_bkg = BackgroundRectangle(second_problem)
         sp_present = Group(sp_bkg, second_problem)
 
         third_choice = Tex(
-            r"""\begin{minipage}{7 cm} \centering Trajectories  $T_2$ and $T_6$ lead to a continuous path that can be \emph{repeated} \end{minipage}""").shift(
-            UP * 2)
-        third_problem = Tex(
-            r"""\begin{minipage}{10 cm} \centering This path can be \emph{repeated} because the trajectory ends with the same IKS it started with it \end{minipage}""")
+            r"""\begin{minipage}{7 cm} \centering Trajectories  $T_2$ and $T_6$ lead to a continuous 
+            path that can be \emph{repeated} \end{minipage}""").shift(UP * 2)
+        third_problem = Tex(r"""\begin{minipage}{10 cm} \centering This path can be \emph{repeated} 
+        because the trajectory ends with the same IKS it started with it \end{minipage}""")
         tp_bkg = BackgroundRectangle(third_problem, fill_opacity=1)
         tp_present = Group(tp_bkg, third_problem)
-        zeroth_problem3 = Tex(
-            r"""\begin{minipage}{7 cm} \centering The path exits from a region with 4 IKS to enter a region with 8 IKS and thus gains 4 IKS (2 in each aspect) \end{minipage}""")
+        zeroth_problem3 = Tex(r"""\begin{minipage}{7 cm} \centering The path exits from a region with 4 
+        IKS to enter a region with 8 IKS and thus gains 4 IKS (2 in each aspect) \end{minipage}""")
         zp_bkg3 = BackgroundRectangle(zeroth_problem3, fill_opacity=1)
         zp_present3 = Group(zp_bkg3, zeroth_problem3)
 
@@ -406,13 +408,13 @@ class PosPlot(Scene):
         # self.play(Transform(complete_set1, complete_set1.copy().scale(0.5).shift(LEFT * 4 + UP)))
         # self.wait(3)
 
-    def FadeInFadeOut(self, *object, wait_time=3):
-        self.play(FadeIn(*object))
+    def FadeInFadeOut(self, *inObject, wait_time=3):
+        self.play(FadeIn(*inObject))
         self.wait(wait_time)
-        self.play(FadeOut(*object))
+        self.play(FadeOut(*inObject))
 
-    def FadeIt(self, *object):
-        self.play(*[Transform(k2, k2.copy().set_opacity(0.2)) for k2 in object])
+    def FadeIt(self, *inObject):
+        self.play(*[Transform(k2, k2.copy().set_opacity(0.2)) for k2 in inObject])
 
 
 class Temp(Scene):
@@ -425,14 +427,14 @@ class Temp(Scene):
         self.FadeInFadeOut(a, b, wait_time=5)
         # self.add(a, b)
 
-    def FadeInFadeOut(self, *object, wait_time=3):
-        self.play(FadeIn(*object))
+    def FadeInFadeOut(self, *inObject, wait_time=3):
+        self.play(FadeIn(*inObject))
         self.wait(wait_time)
         # self.play(FadeOut(*object))
-        self.play(*[Transform(k2, k2.copy().set_opacity(0.2)) for k2 in object])
+        self.play(*[Transform(k2, k2.copy().set_opacity(0.2)) for k2 in inObject])
 
 
-def my_det(t2, t3, sixR=False):
+def my_det(t2, t3):
     inter_val = [0, t2, t3]
     # return -3 * (3 * cos(inter_val[2]) + 4) * (
     #             sin(inter_val[2]) * (2 + 4 * cos(inter_val[1])) - 2 * cos(inter_val[1]) * cos(inter_val[2]))
@@ -547,12 +549,14 @@ class JacDetPlot(Scene):
             plane2.c2p(0, my_det6R(start_index, end_index, cur_iter=0, total_iter=50)))
 
 
-        jac_cusp = Tex(r"""\begin{minipage}{8cm}\centering JACO robot is a cuspidal robot\end{minipage}""", font_size=36).to_edge(RIGHT).shift(UP)
-        jac_cusp1 = Tex(r"""\begin{minipage}{8cm}\begin{itemize} \item Maximum 12 IKS have been found \item The 12 IKS lie in 2 seperate aspects \end{itemize}\end{minipage}""", font_size=36).next_to(jac_cusp, DOWN)
+        jac_cusp = Tex(r"""\begin{minipage}{8cm}\centering JACO robot is a cuspidal robot\end{minipage}""",
+                       font_size=36).to_edge(RIGHT).shift(UP)
+        jac_cusp1 = Tex(r"""\begin{minipage}{8cm}\begin{itemize} \item Maximum 12 IKS have been found 
+        \item The 12 IKS lie in 2 separate aspects \end{itemize}\end{minipage}""", font_size=36).next_to(jac_cusp, DOWN)
 
-        title = Tex(r"""\begin{minipage}{12cm}\centering Example nonsingular change of solutions \\ The robot changes configuration without the change of sign for $\det(\mathbf{J})$\end{minipage}""", font_size=36).to_edge(DOWN, buff=0.5)
-
-
+        title = Tex(r"""\begin{minipage}{12cm}\centering Example nonsingular change of solutions \\ 
+        The robot changes configuration without the change of sign for $\det(\mathbf{J})$\end{minipage}""",
+                    font_size=36).to_edge(DOWN, buff=0.5)
 
         # animations
         self.add(*get_Background("JACO robot is cuspidal"))
@@ -624,13 +628,12 @@ class TotalPlot(ZoomedScene):
         full_path2 = []
         zoom_path = []
         zoom_path2 = []
-        zoom_pathd = []
-        zoom_pathd2 = []
+        zoom_pathD = []
+        zoom_pathD2 = []
         paths = make_paths(df_n, thresh=0.2)
         paths2 = make_paths(df_n2, thresh=0.1)
         print(len(paths))
         t_str = []
-        t_iter = 0
         t1 = []
 
         for i2 in range(len(paths) + len(paths2)):
@@ -645,7 +648,7 @@ class TotalPlot(ZoomedScene):
                                            np.array([(i3 + 1) * path_length / 724, paths[i2][i4 + 1], 0]),
                                            stroke_color=RED_C, stroke_width=5, stroke_opacity=0.6).shift(
                         LEFT * path_length / 2))
-                    zoom_pathd2.append(Line(np.array([i3 * path_length / 724, paths[i2][i4], 0]),
+                    zoom_pathD2.append(Line(np.array([i3 * path_length / 724, paths[i2][i4], 0]),
                                             np.array([(i3 + 1) * path_length / 724, paths[i2][i4 + 1], 0]),
                                             stroke_color=RED_C, stroke_width=0.5, stroke_opacity=0.6).shift(
                         LEFT * path_length / 2))
@@ -668,7 +671,7 @@ class TotalPlot(ZoomedScene):
                                           np.array([(i3 + 1) * path_length / 724, paths2[i2][i4 + 1], 0]),
                                           stroke_color=BLUE_C, stroke_width=5, stroke_opacity=0.6).shift(
                         LEFT * path_length / 2))
-                    zoom_pathd.append(Line(np.array([i3 * path_length / 724, paths2[i2][i4], 0]),
+                    zoom_pathD.append(Line(np.array([i3 * path_length / 724, paths2[i2][i4], 0]),
                                            np.array([(i3 + 1) * path_length / 724, paths2[i2][i4 + 1], 0]),
                                            stroke_color=BLUE_C, stroke_width=0.5, stroke_opacity=0.6).shift(
                         LEFT * path_length / 2))
@@ -697,20 +700,21 @@ class TotalPlot(ZoomedScene):
         point_plot8c = Dot().move_to(np.array([-path_length / 2, paths2[3][1], 0]))
 
         first_text = Tex(
-            r"""\begin{minipage}{7 cm} \centering We evaluate the IKS at each discrete point along the closed loop path \end{minipage}""").shift(
+            r"""\begin{minipage}{7 cm} \centering We evaluate the IKS at each discrete point along the closed 
+            loop path \end{minipage}""").shift(
             UP * 1.5)
         second_text = Tex(
-            r"""\begin{minipage}{7 cm} \centering The following graph shows the values of $\theta_1$ at each instance along the path \end{minipage}""").shift(
-            UP * 1.5)
+            r"""\begin{minipage}{7 cm} \centering The following graph shows the values of $\theta_1$ at each 
+            instance along the path \end{minipage}""").shift(UP * 1.5)
         second_text2 = Tex(
-            r"""\begin{minipage}{7 cm} \centering The blue paths correspond to Aspect 1 ($\det(\mathbf{J}) > 0$)  \\ The red paths correspond to Aspect 2 ($\det(\mathbf{J}) < 0$) \end{minipage}""").shift(
-            UP)
+            r"""\begin{minipage}{7 cm} \centering The blue paths correspond to Aspect 1 ($\det(\mathbf{J}) > 0$)  
+            \\ The red paths correspond to Aspect 2 ($\det(\mathbf{J}) < 0$) \end{minipage}""").shift(UP)
         second_text3 = Tex(
-            r"""\begin{minipage}{7 cm} \centering As the trajectory is a closed loop, the final IKS match the initial IKS \end{minipage}""").shift(
-            UP * 1.5)
+            r"""\begin{minipage}{7 cm} \centering As the trajectory is a closed loop, the final IKS match the 
+            initial IKS \end{minipage}""").shift(UP * 1.5)
         third_text = Tex(
-            r"""\begin{minipage}{7 cm} \centering We begin from a pose with 8 IKS \\ (4 IKS in each aspect) \end{minipage}""").shift(
-            UP * 1.5)
+            r"""\begin{minipage}{7 cm} \centering We begin from a pose with 8 IKS \\ 
+            (4 IKS in each aspect) \end{minipage}""").shift(UP * 1.5)
 
         # animations
 
@@ -732,7 +736,7 @@ class TotalPlot(ZoomedScene):
         self.activate_zooming(animate=True)
 
         self.remove(*zoom_path2, *zoom_path)
-        self.add(*zoom_pathd, *zoom_pathd2)
+        self.add(*zoom_pathD, *zoom_pathD2)
         self.wait(2)
         # self.remove(*zoom_pathd, *zoom_pathd2)
         # self.add(*zoom_path2, *zoom_path)
@@ -808,8 +812,6 @@ class NegPlot(ZoomedScene):
         paths = make_paths(df_n, thresh=0.2)
         paths2 = make_paths(df_n2, thresh=0.1)
         print(len(paths))
-        t_str = []
-        t_iter = 0
         t1 = []
 
         for i2 in range(len(paths)):
@@ -867,10 +869,12 @@ class NegPlot(ZoomedScene):
         point_plot2 = Dot(color=GREEN).move_to(np.array([-path_length / 2, paths[1][1], 0]))
 
         third_choice = Tex(
-            r"""\begin{minipage}{7 cm} \centering Trajectories  $T_1$ and $T_5$ lead to a continuous path that CANNOT be \emph{repeated} \end{minipage}""").shift(
+            r"""\begin{minipage}{7 cm} \centering Trajectories  $T_1$ and $T_5$ lead to a continuous path 
+            that CANNOT be \emph{repeated} \end{minipage}""").shift(
             UP * 1.5)
         third_problem = Tex(
-            r"""\begin{minipage}{7 cm} \centering These paths CANNOT be \emph{repeated} because the trajectory ends at the start point of another trajectory which is not repeatable IKS \end{minipage}""")
+            r"""\begin{minipage}{7 cm} \centering These paths CANNOT be \emph{repeated} because the 
+            trajectory ends at the start point of another trajectory which is not repeatable IKS \end{minipage}""")
         tp_bkg = BackgroundRectangle(third_problem, fill_opacity=1)
         tp_present = Group(tp_bkg, third_problem)
 
@@ -892,8 +896,8 @@ class NegPlot(ZoomedScene):
         self.wait()
         self.FadeInFadeOut(tp_present, wait_time=5)
 
-    def FadeIt(self, *object):
-        self.play(*[Transform(k2, k2.copy().set_opacity(0.2)) for k2 in object])
+    def FadeIt(self, *inObject):
+        self.play(*[Transform(k2, k2.copy().set_opacity(0.2)) for k2 in inObject])
 
     def FadeInFadeOut(self, *object_to_process, wait_time=3):
         self.play(FadeIn(*object_to_process))
@@ -946,26 +950,15 @@ class TempPlot(ZoomedScene):
             LEFT * 1.5).scale(0.8)
         plane2.add(x_label2, y_label2)
 
-        full_path = []
         full_path2 = []
         paths = make_paths(df_n)
 
         offset_axis = np.array([plane2.x_axis.get_length() / 2, 0, 0])
 
-        point_plot = Dot().move_to(plane2.c2p(-path_length / 2, paths[2][1]))
-        point_plot2 = Dot().move_to(plane2.c2p(-path_length / 2, paths[0][1]))
-        point_plot3 = Dot(color=GREEN).move_to(plane2.c2p(-path_length / 2, paths[1][1]))
-        point_plot4 = Dot(color=GREEN).move_to(plane2.c2p(-path_length / 2, paths[3][1]))
-
         point_plotc = Dot().move_to(plane2.c2p(-path_length / 2, paths[2][1]) + offset_axis)
         point_plot2c = Dot().move_to(plane2.c2p(-path_length / 2, paths[0][1]) + offset_axis)
         point_plot3c = Dot(color=GREEN).move_to(plane2.c2p(-path_length / 2, paths[1][1]) + offset_axis)
         point_plot4c = Dot(color=GREEN).move_to(plane2.c2p(-path_length / 2, paths[3][1]) + offset_axis)
-
-        point_plotb = Circle(color=BLUE_C, radius=0.1).move_to(np.array([-path_length / 2, paths[2][1], 0]))
-        point_plot2b = Circle(color=BLUE_C, radius=0.1).move_to(np.array([-path_length / 2, paths[0][1], 0]))
-        point_plot3b = Circle(color=BLUE_C, radius=0.1).move_to(np.array([-path_length / 2, paths[1][1], 0]))
-        point_plot4b = Circle(color=BLUE_C, radius=0.1).move_to(np.array([-path_length / 2, paths[3][1], 0]))
         print(len(paths))
 
         for i2 in range(len(paths)):
@@ -997,8 +990,8 @@ class TempPlot(ZoomedScene):
                     [point_plotc, point_plot2c, point_plot3c, point_plot4c]])
         self.wait(2)
 
-    def FadeIt(self, *object):
-        self.play(*[Transform(k2, k2.copy().set_opacity(0.2)) for k2 in object])
+    def FadeIt(self, *inObject):
+        self.play(*[Transform(k2, k2.copy().set_opacity(0.2)) for k2 in inObject])
 
     def FadeInFadeOut(self, *object_to_process, wait_time=3):
         self.play(FadeIn(*object_to_process))

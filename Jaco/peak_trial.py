@@ -1,12 +1,10 @@
-import numpy as np
-from manim import *
-
-from robot_functions import make_paths
-from maple_functions import *
-from icra_functions import *
+from functions_durgesh.robot_functions import make_paths
+from functions_durgesh.maple_functions import *
+from functions_durgesh.icra_functions import *
 import pandas as pd
 
-def my_det(t2, t3, sixR=False):
+
+def my_det(t2, t3):
     inter_val = [0, t2, t3]
     # return -3 * (3 * cos(inter_val[2]) + 4) * (
     #             sin(inter_val[2]) * (2 + 4 * cos(inter_val[1])) - 2 * cos(inter_val[1]) * cos(inter_val[2]))
@@ -104,8 +102,8 @@ class NegPlotT(ZoomedScene):
         paths = make_paths(df_n, thresh=0.2)
         paths2 = make_paths(df_n2, thresh=0.1)
         print(len(paths))
-        t_str = []
-        t_iter = 0
+        # t_str = []
+        # t_iter = 0
         t1 = []
 
         for i2 in range(len(paths)):
@@ -114,15 +112,15 @@ class NegPlotT(ZoomedScene):
                 i3 = paths[i2][0] - len(paths[i2]) + 1 + i4
                 if i2 == 2:
                     zoom_path2.append(Line(plane2.c2p((i3 * path_length / 724), paths[i2][i4]),
-                                            plane2.c2p(((i3 + 1) * path_length / 724), paths[i2][i4 + 1]),
-                                            stroke_color=RED_C, stroke_width=5, stroke_opacity=0.6))
+                                           plane2.c2p(((i3 + 1) * path_length / 724), paths[i2][i4 + 1]),
+                                           stroke_color=RED_C, stroke_width=5, stroke_opacity=0.6))
                     zoom_pathd2.append(Line(plane2.c2p((i3 * path_length / 724), paths[i2][i4]),
                                             plane2.c2p(((i3 + 1) * path_length / 724), paths[i2][i4 + 1]),
                                             stroke_color=RED_C, stroke_width=0.5, stroke_opacity=0.6))
                 else:
                     full_path2.append(Line(plane2.c2p((i3 * path_length / 724), paths[i2][i4]),
-                                            plane2.c2p(((i3 + 1) * path_length / 724), paths[i2][i4 + 1]),
-                                            stroke_color=RED_C, stroke_width=5, stroke_opacity=0.6))
+                                           plane2.c2p(((i3 + 1) * path_length / 724), paths[i2][i4 + 1]),
+                                           stroke_color=RED_C, stroke_width=5, stroke_opacity=0.6))
             if i2 == 3:
                 t1.append(Tex("$T_1$").scale(0.8).move_to(full_path2[-1].get_end()).shift(RIGHT * 0.2))
             elif i2 == 1:
@@ -134,21 +132,22 @@ class NegPlotT(ZoomedScene):
                 i3 = paths2[i2][0] - len(paths2[i2]) + 1 + i4
                 if i2 == 2:
                     zoom_path.append(Line(plane2.c2p((i3 * path_length / 724), paths2[i2][i4]),
-                                           plane2.c2p(((i3 + 1) * path_length / 724), paths2[i2][i4 + 1]),
-                                           stroke_color=BLUE_C, stroke_width=5, stroke_opacity=0.6))
+                                          plane2.c2p(((i3 + 1) * path_length / 724), paths2[i2][i4 + 1]),
+                                          stroke_color=BLUE_C, stroke_width=5, stroke_opacity=0.6))
                     zoom_pathd.append(Line(plane2.c2p((i3 * path_length / 724), paths2[i2][i4]),
-                                            plane2.c2p(((i3 + 1) * path_length / 724), paths2[i2][i4 + 1]),
-                                            stroke_color=BLUE_C, stroke_width=0.5, stroke_opacity=0.6))
+                                           plane2.c2p(((i3 + 1) * path_length / 724), paths2[i2][i4 + 1]),
+                                           stroke_color=BLUE_C, stroke_width=0.5, stroke_opacity=0.6))
                 else:
                     full_path.append(Line(plane2.c2p((i3 * path_length / 724), paths2[i2][i4]),
-                                           plane2.c2p(((i3 + 1) * path_length / 724), paths2[i2][i4 + 1]),
-                                           stroke_color=BLUE_C, stroke_width=5, stroke_opacity=0.6))
+                                          plane2.c2p(((i3 + 1) * path_length / 724), paths2[i2][i4 + 1]),
+                                          stroke_color=BLUE_C, stroke_width=5, stroke_opacity=0.6))
 
             if i2 == 2:
                 t1.append(Tex("$T_3, T_4$").scale(0.8).move_to(zoom_path[-1].get_end()).shift(RIGHT * 0.8))
             else:
                 if i2 == 0:
-                    t1.append(Tex("$T_7, T_8$").scale(0.8).move_to(full_path[-1].get_end()).shift(RIGHT * 0.8 + UP * 0.2))
+                    t1.append(
+                        Tex("$T_7, T_8$").scale(0.8).move_to(full_path[-1].get_end()).shift(RIGHT * 0.8 + UP * 0.2))
                 if i2 == 1:
                     t1.append(Tex("$T_6$").scale(0.8).move_to(full_path[-1].get_end()).shift(LEFT * 2 + DOWN * 0.5))
                 if i2 == 3:
@@ -159,9 +158,13 @@ class NegPlotT(ZoomedScene):
         point_plotN = Dot(color=GREEN).move_to(plane2.c2p(0, paths[4][1]))
 
         third_choice = Tex(
-            r"""\begin{minipage}{5 cm} \centering Trajectories  $T_1$ and $T_5$ lead to a continuous path that CANNOT be \emph{repeated} \end{minipage}""", font_size=36).to_edge(RIGHT)
+            r"""\begin{minipage}{5 cm} \centering Trajectories  $T_1$ and $T_5$ lead to a continuous path that 
+            CANNOT be \emph{repeated} \end{minipage}""",
+            font_size=36).to_edge(RIGHT)
         third_problem = Tex(
-            r"""\begin{minipage}{5 cm} \centering These paths CANNOT be \emph{repeated} because the trajectory ends at the start point of another trajectory which is not repeatable \end{minipage}""", font_size=36).to_edge(RIGHT)
+            r"""\begin{minipage}{5 cm} \centering These paths CANNOT be \emph{repeated} because the trajectory 
+            ends at the start point of another trajectory which is not repeatable \end{minipage}""",
+            font_size=36).to_edge(RIGHT)
         tp_bkg = BackgroundRectangle(third_problem, fill_opacity=1)
         tp_present = Group(tp_bkg, third_problem)
 
@@ -192,8 +195,8 @@ class NegPlotT(ZoomedScene):
         self.wait()
         self.FadeInFadeOut(tp_present, wait_time=5)
 
-    def FadeIt(self, *object):
-        self.play(*[Transform(k2, k2.copy().set_opacity(0.2)) for k2 in object])
+    def FadeIt(self, *inObject):
+        self.play(*[Transform(k2, k2.copy().set_opacity(0.2)) for k2 in inObject])
 
     def FadeInFadeOut(self, *object_to_process, wait_time=3):
         self.play(FadeIn(*object_to_process))
@@ -232,7 +235,7 @@ class PosPlotT(Scene):
             LEFT * 1.5).scale(0.8)
         plane2.add(x_label2, y_label2)
 
-        full_path = []
+        # full_path = []
         full_path2 = []
         paths = make_paths(df_n)
 
@@ -279,37 +282,51 @@ class PosPlotT(Scene):
                                         stroke_color=RED_C, stroke_width=5, stroke_opacity=0.6))
 
         four_choices = Tex(
-            r"""\begin{minipage}{5 cm}\centering We have 4 IKS in the same aspect and we can start the trajectory from any one of them \end{minipage}""", font_size=36).to_edge(RIGHT)
+            r"""\begin{minipage}{5 cm}\centering We have 4 IKS in the same aspect and we can start the 
+            trajectory from any one of them \end{minipage}""",
+            font_size=36).to_edge(RIGHT)
         first_choice = Tex(
-            r"""\begin{minipage}{5 cm} \centering Let us start with IKS corresponding to $T_3$\end{minipage}""", font_size=36).to_edge(RIGHT)
+            r"""\begin{minipage}{5 cm} \centering Let us start with IKS corresponding to $T_3$\end{minipage}""",
+            font_size=36).to_edge(RIGHT)
         zeroth_problem = Tex(
-            r"""\begin{minipage}{5 cm} \centering The path exits from a region with 8 IKS to enter a region with 6 IKS and thus lose 2 IKS (1 in each aspect) \end{minipage}""", font_size=36).to_edge(RIGHT)
+            r"""\begin{minipage}{5 cm} \centering The path exits from a region with 8 IKS to enter a region with 
+            6 IKS and thus lose 2 IKS (1 in each aspect) \end{minipage}""",
+            font_size=36).to_edge(RIGHT)
         zp_bkg = BackgroundRectangle(zeroth_problem, fill_opacity=1)
         zp_present = Group(zp_bkg, zeroth_problem)
         first_problem = Tex(
-            r"""\begin{minipage}{5 cm}We do not have a continuous path beyond this point and a sudden jump to any other paths in the same aspect will take place \end{minipage}""", font_size=36).to_edge(RIGHT)
+            r"""\begin{minipage}{5 cm}We do not have a continuous path beyond this point and a sudden jump to 
+            any other paths in the same aspect will take place \end{minipage}""",
+            font_size=36).to_edge(RIGHT)
         fp_bkg = BackgroundRectangle(first_problem, fill_opacity=1)
         fp_present = Group(fp_bkg, first_problem)
 
         zeroth_problem2 = Tex(
-            r"""\begin{minipage}{5 cm} \centering The path exits from a region with 6 IKS to enter a region with 4 IKS and further loses 2 IKS (1 in each aspect) \end{minipage}""", font_size=36).to_edge(RIGHT)
+            r"""\begin{minipage}{5 cm} \centering The path exits from a region with 6 IKS to enter a region 
+            with 4 IKS and further loses 2 IKS (1 in each aspect) \end{minipage}""",
+            font_size=36).to_edge(RIGHT)
         zp_bkg2 = BackgroundRectangle(zeroth_problem2, fill_opacity=1)
         zp_present2 = Group(zp_bkg2, zeroth_problem2)
         second_choice = Tex(
-            r"""\begin{minipage}{5 cm} \centering Let us start with IKS corresponding to $T_7$\end{minipage}""").to_edge(RIGHT)
+            r"""\begin{minipage}{5 cm} \centering Let us start with IKS corresponding to 
+            $T_7$\end{minipage}""").to_edge(RIGHT)
         second_problem = Tex(
-            r"""\begin{minipage}{5 cm}Same problem is encountered at this point and a sudden jump to any other paths with a solution at next instance will take place \end{minipage}""", font_size=36).to_edge(RIGHT)
+            r"""\begin{minipage}{5 cm}Same problem is encountered at this point and a sudden jump to any other paths 
+            with a solution at next instance will take place \end{minipage}""", font_size=36).to_edge(RIGHT)
         sp_bkg = BackgroundRectangle(second_problem)
         sp_present = Group(sp_bkg, second_problem)
 
         third_choice = Tex(
-            r"""\begin{minipage}{5 cm} \centering Trajectories  $T_2$ and $T_6$ lead to a continuous path that can be \emph{repeated} \end{minipage}""", font_size=36).to_edge(RIGHT)
+            r"""\begin{minipage}{5 cm} \centering Trajectories  $T_2$ and $T_6$ lead to a continuous path 
+            that can be \emph{repeated} \end{minipage}""", font_size=36).to_edge(RIGHT)
         third_problem = Tex(
-            r"""\begin{minipage}{5 cm} \centering This path can be \emph{repeated} because the trajectory ends with the same IKS it started with it \end{minipage}""", font_size=36).to_edge(RIGHT)
+            r"""\begin{minipage}{5 cm} \centering This path can be \emph{repeated} because the 
+            trajectory ends with the same IKS it started with it \end{minipage}""", font_size=36).to_edge(RIGHT)
         tp_bkg = BackgroundRectangle(third_problem, fill_opacity=1)
         tp_present = Group(tp_bkg, third_problem)
         zeroth_problem3 = Tex(
-            r"""\begin{minipage}{5 cm} \centering The path exits from a region with 4 IKS to enter a region with 8 IKS and thus gains 4 IKS (2 in each aspect) \end{minipage}""", font_size=36).to_edge(RIGHT)
+            r"""\begin{minipage}{5 cm} \centering The path exits from a region with 4 IKS to enter a region
+             with 8 IKS and thus gains 4 IKS (2 in each aspect) \end{minipage}""", font_size=36).to_edge(RIGHT)
         zp_bkg3 = BackgroundRectangle(zeroth_problem3, fill_opacity=1)
         zp_present3 = Group(zp_bkg3, zeroth_problem3)
 
@@ -379,10 +396,10 @@ class PosPlotT(Scene):
         # self.play(Transform(complete_set1, complete_set1.copy().scale(0.5).shift(LEFT * 4 + UP)))
         # self.wait(3)
 
-    def FadeInFadeOut(self, *object, wait_time=3):
-        self.play(FadeIn(*object))
+    def FadeInFadeOut(self, *inObject, wait_time=3):
+        self.play(FadeIn(*inObject))
         self.wait(wait_time)
-        self.play(FadeOut(*object))
+        self.play(FadeOut(*inObject))
 
-    def FadeIt(self, *object):
-        self.play(*[Transform(k2, k2.copy().set_opacity(0.2)) for k2 in object])
+    def FadeIt(self, *inObject):
+        self.play(*[Transform(k2, k2.copy().set_opacity(0.2)) for k2 in inObject])

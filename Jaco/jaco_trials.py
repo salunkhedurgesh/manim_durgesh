@@ -1,8 +1,8 @@
-import numpy as np
+import manim.utils.paths
 import pandas as pd
 
-from icra_functions import *
-from maple_functions import *
+from functions_durgesh.icra_functions import *
+from functions_durgesh.maple_functions import *
 
 
 class Temp(Scene):
@@ -165,7 +165,7 @@ class PlanePlot2(Scene):
             }).add_coordinates(range(-3, 4), range(-3, 4)).shift(LEFT * 3).scale(0.6)
         curve = plane1.plot_implicit_curve(lambda t2, t3: -3 * (3 * np.cos(t3) + 4) * (
                 np.sin(t3) * (2 + 4 * np.cos(t2)) - 2 * np.cos(t2) * np.cos(t3)), color=DARK_BLUE)
-        curve2 = plane1.plot_implicit_curve(lambda t2, t3: 3 * np.sin(t2) + 4 * np.cos(t3), color=DARK_BLUE)
+        # curve2 = plane1.plot_implicit_curve(lambda t2, t3: 3 * np.sin(t2) + 4 * np.cos(t3), color=DARK_BLUE)
         solution_set = [[-3, -0.5], [-0.742, 2.628], [-2.755775486, 2.099288504], [-0.3523366242, -2.014417810]]
         first_solution = Dot(radius=0.06, color=PURPLE).move_to(plane1.c2p(solution_set[0][0], solution_set[0][1]))
         first_solution2 = Dot(radius=0.06, color=PURPLE).move_to(plane1.c2p(solution_set[0][0], solution_set[0][1]))
@@ -181,7 +181,7 @@ class PlanePlot2(Scene):
         third_map = Dot(radius=0.06, color=PURPLE).move_to(plane1.c2p(solution_set[2][0], solution_set[2][1]))
         fourth_map = Dot(radius=0.06, color=PURPLE).move_to(plane1.c2p(solution_set[3][0], solution_set[3][1]))
 
-        point = Dot().move_to(plane1.c2p(0, 0))
+        # point = Dot().move_to(plane1.c2p(0, 0))
 
         plane1.y_axis.shift(LEFT * plane1.x_axis.get_length() / 2)
         plane1.x_axis.shift(DOWN * plane1.y_axis.get_length() / 2)
@@ -215,9 +215,10 @@ class PlanePlot2(Scene):
 
         # print(f"p2c debug: {plane2.c2p(1, -40)}")
         det_point = Dot(color=LIGHT_BROWN).move_to(plane2.c2p(0, my_det(solution_set[0][0], solution_set[0][1])))
-        offset = first_solution.get_center()
+        # offset = first_solution.get_center()
 
-        nscs_confirm = Tex(r"""\begin{minipage}{8cm}\centering The nonsingular change of solution can be confirmed with the determinant value as it does not change signs\end{minipage}""", font_size=36).to_edge(DOWN, buff=0.5)
+        nscs_confirm = Tex(r"""\begin{minipage}{8cm}\centering The nonsingular change of solution can be confirmed 
+        with the determinant value as it does not change signs\end{minipage}""", font_size=36).to_edge(DOWN, buff=0.5)
 
         # animations
         self.add(plane1)
@@ -225,8 +226,11 @@ class PlanePlot2(Scene):
         self.wait()
         self.add(first_map, second_map, third_map, fourth_map, pose_point)
         self.add(four_solution_text)
-        self.add(*[TracedPath(k.get_center, stroke_width=2, stroke_color=k2, dissipating_time=0.5, stroke_opacity=0.6) for (k, k2) in zip([first_map, second_map, third_map, fourth_map], [ORANGE, YELLOW, BLUE, RED])])
-        self.play(*[ReplacementTransform(i2, pose_point, run_time=2) for i2 in [first_map, second_map, third_map, fourth_map]])
+        self.add(*[TracedPath(k.get_center, stroke_width=2, stroke_color=k2, dissipating_time=0.5,
+                              stroke_opacity=0.6) for (k, k2) in zip([first_map, second_map, third_map, fourth_map],
+                                                                     [ORANGE, YELLOW, BLUE, RED])])
+        self.play(*[ReplacementTransform(i2, pose_point, run_time=2) for i2 in [first_map, second_map,
+                                                                                third_map, fourth_map]])
         self.wait()
         self.clear()
 
@@ -255,8 +259,8 @@ class SingularityPlot(ThreeDScene):
         # Graph with Number Plane
         axes = ThreeDAxes(x_range=[-3.2, 3.2], y_range=[-3.2, 3.2], z_range=[-3.2, 3.2], x_length=6.4, y_length=6.4,
                           z_length=6.4)
-        curve_eqn = lambda t2, t3: -3 * (3 * np.cos(t3) + 4) * (
-                np.sin(t3) * (2 + 4 * np.cos(t2)) - 2 * np.cos(t2) * np.cos(t3)) / 18
+        # curve_eqn = lambda t2, t3: -3 * (3 * np.cos(t3) + 4) * (
+        #         np.sin(t3) * (2 + 4 * np.cos(t2)) - 2 * np.cos(t2) * np.cos(t3)) / 18
 
         def param_trig(u, v):
             t2 = u
@@ -297,24 +301,24 @@ class LinePlot(Scene):
                                  "stroke_width": 0.1,
                                  "stroke_opacity": 0.6
                              })
-        curve = plane1.plot_implicit_curve(lambda t2, t3: -3 * (3 * np.cos(t3) + 4) * (
-                np.sin(t3) * (2 + 4 * np.cos(t2)) - 2 * np.cos(t2) * np.cos(t3)), color=DARK_BLUE)
-        line_plot = plane1.plot_line_graph([0, 1, 2, 3], [0, 1, 2, 3], add_vertex_dots=False)
+        # curve = plane1.plot_implicit_curve(lambda t2, t3: -3 * (3 * np.cos(t3) + 4) * (
+        #         np.sin(t3) * (2 + 4 * np.cos(t2)) - 2 * np.cos(t2) * np.cos(t3)), color=DARK_BLUE)
+        # line_plot = plane1.plot_line_graph([0, 1, 2, 3], [0, 1, 2, 3], add_vertex_dots=False)
 
-        final_point = Dot().shift(LEFT)
+        # final_point = Dot().shift(LEFT)
 
-        x_box = Line([-3.2, 3.2, 0], [3.2, 3.2, 0], stroke_width=plane1.x_axis.get_stroke_width())
-        y_box = Line([3.2, -3.2, 0], [3.2, 3.2, 0], stroke_width=plane1.x_axis.get_stroke_width())
+        # x_box = Line([-3.2, 3.2, 0], [3.2, 3.2, 0], stroke_width=plane1.x_axis.get_stroke_width())
+        # y_box = Line([3.2, -3.2, 0], [3.2, 3.2, 0], stroke_width=plane1.x_axis.get_stroke_width())
         plane1.y_axis.shift(LEFT * 3.2)
         plane1.x_axis.shift(DOWN * 3.2)
         plane1.add_coordinates(range(-3, 4), range(-3, 4))
         plane1.coordinate_labels[1][0:3].shift(LEFT * 0.5)
         plane1.coordinate_labels[1][3:7].shift(LEFT * 0.35)
-        total_graph = VGroup(plane1, curve, x_box, y_box, line_plot)
+        # total_graph = VGroup(plane1, curve, x_box, y_box, line_plot)
 
         # Plotting the path
         path_length = 10
-        df_n = pd.read_csv("D:\durghy_manim\Jaco\saved_data_theta1.csv")
+        # df_n = pd.read_csv("D:\durghy_manim\Jaco\saved_data_theta1.csv")
         df_n = pd.read_csv("D:\durghy_manim\Jaco\saved_data_neg_theta1.csv")
         plane2 = NumberPlane(x_range=[0, path_length], y_range=[-3.2, 3.2], x_length=path_length, y_length=6.4,
                              background_line_style={
@@ -329,7 +333,7 @@ class LinePlot(Scene):
         plane2.coordinate_labels[1][3:7].shift(LEFT * 0.35)
         # plane2.shift(LEFT*path_length/2)
 
-        point_plot = Dot().move_to(np.array([-path_length / 2, df_n.iloc[0, 3], 0]))
+        # point_plot = Dot().move_to(np.array([-path_length / 2, df_n.iloc[0, 3], 0]))
         full_path = []
         full_path2 = []
         for i2 in np.arange(0, len(df_n) - 3, 3):
@@ -346,9 +350,9 @@ class LinePlot(Scene):
         # self.add(total_graph)
         # self.add(point_plot, final_point)
         self.add(*full_path, plane2, *full_path2)
-        # self.add(TracedPath(point_plot.get_center))
-        # for i2 in np.arange(0, len(df_n), 4):
-        #     self.play(Transform(point_plot, point_plot.copy().move_to(np.array([-5 + df_n.iloc[i2, 1] / 70, df_n.iloc[i2, 2], 0])), run_time=0.005))
+        # self.add(TracedPath(point_plot.get_center)) for i2 in np.arange(0, len(df_n), 4): self.play(Transform(
+        # point_plot, point_plot.copy().move_to(np.array([-5 + df_n.iloc[i2, 1] / 70, df_n.iloc[i2, 2], 0])),
+        # run_time=0.005))
         # self.play(FadeIn(total_graph))
         # self.wait()
         # self.play(ReplacementTransform(total_graph, total_graph.copy().shift(LEFT*3).scale(0.5)), run_time=1)
@@ -360,15 +364,15 @@ class ClockwisePathExample(Scene):
 
         starting_points = VGroup(
             *[
-                Dot(LEFT + pos, color=color)
-                for pos, color in zip([UP, DOWN, LEFT], colors)
+                Dot(LEFT + pos, color=inColor)
+                for pos, inColor in zip([UP, DOWN, LEFT], colors)
             ]
         )
 
         finish_points = VGroup(
             *[
-                Dot(RIGHT + pos, color=color)
-                for pos, color in zip([ORIGIN, UP, DOWN], colors)
+                Dot(RIGHT + pos, color=inColor)
+                for pos, inColor in zip([ORIGIN, UP, DOWN], colors)
             ]
         )
 
@@ -382,7 +386,7 @@ class ClockwisePathExample(Scene):
             Transform(
                 starting_points,
                 finish_points,
-                path_func=utils.paths.clockwise_path(),
+                path_func=manim.utils.paths.clockwise_path(),
                 run_time=2,
             )
         )
@@ -465,22 +469,21 @@ class PosPlot(Scene):
         plane2.coordinate_labels[1][3:7].shift(LEFT * 0.35)
         # plane2.shift(LEFT*path_length/2)
 
-        point_plot = Dot().move_to(np.array([-path_length / 2, df_n.iloc[0, 3], 0]))
+        # point_plot = Dot().move_to(np.array([-path_length / 2, df_n.iloc[0, 3], 0]))
         full_path = []
-        full_path2 = []
+        # full_path2 = []
         paths = make_paths(df_n)
-        start_index = 0
+        # start_index = 0
 
         print(len(paths))
         # print(paths[i2])
         for i2 in range(len(paths)):
             for i4 in np.arange(1, len(paths[i2]) - 1):
                 i3 = paths[i2][0] - len(paths[i2]) + 1 + i4
-                full_path.append(Line(np.array([i3 * path_length / 724, paths[i2][i4], 0]), np.array([(i3 + 1) *
-                                                                                                      path_length / 724,
-                                                                                                      paths[i2][i4 + 1],
-                                                                                                      0]), stroke_color=
-                                      GREEN).shift(LEFT * path_length / 2))
+                full_path.append(Line(np.array([i3 * path_length / 724, paths[i2][i4], 0]),
+                                      np.array([(i3 + 1) * path_length / 724, paths[i2][i4 + 1], 0]),
+                                      stroke_color=GREEN).shift(LEFT * path_length / 2))
+
         # line2 = Line(np.array([0, 0, 0]), np.array([2, 1, 0]), stroke_color=GREEN_A).shift(LEFT*path_length / 2)
         # animations
 

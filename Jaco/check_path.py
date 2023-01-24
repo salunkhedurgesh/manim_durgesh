@@ -53,4 +53,3 @@ for i2 in np.arange(450, len(df)):
 print(f"The length of path_record is {len(path_record)}")
 for j in range(len(path_record)):
     print(f"Path {j} ends at {path_record[j][0]}")
-

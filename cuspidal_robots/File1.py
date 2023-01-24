@@ -1,10 +1,8 @@
 import math
 
-import numpy.linalg as la
-from manim import *
-from robot_functions import *
-from icra_supplementary import *
-from master_thesis_functions import *
+from functions_durgesh.robot_functions import *
+from functions_durgesh.icra_supplementary import *
+from functions_durgesh.master_thesis_functions import *
 
 """
 Note : The main difference between Transform and ReplacementTransform

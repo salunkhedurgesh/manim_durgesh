@@ -1,11 +1,6 @@
-import math
-import numpy.linalg as la
-from manim import *
-from robot_functions import *
-from icra_supplementary import *
-from master_thesis_functions import *
-from maple_functions import *
-from icra_functions import *
+from functions_durgesh.robot_functions import *
+from functions_durgesh.maple_functions import *
+from functions_durgesh.icra_functions import *
 import pandas as pd
 
 
@@ -365,8 +360,8 @@ class AnimateRobot_Gen3(ThreeDScene):
             [2.9348478476558204318, 0.71526543800550275669, 1.9822544364234219116, -2.8498950327084032609,
              -2.0883784091406518551, 2.8663726830333717845]]
 
-        point1_comp = [-3.1201, 0.7082, 1.4904, 2.62, -1.9637, -1.8817]
-        point5_comp = [2.4730, 0.0943, 2.0281, -1.4916, -2.4244, 2.4362]
+        # point1_comp = [-3.1201, 0.7082, 1.4904, 2.62, -1.9637, -1.8817]
+        # point5_comp = [2.4730, 0.0943, 2.0281, -1.4916, -2.4244, 2.4362]
 
         theta_list = adapt_2Pi(complete_Gen3[0])
         theta_list2 = adapt_2Pi(complete_Gen3[2])
@@ -429,27 +424,27 @@ class AnimateRobot_Gen3(ThreeDScene):
 class PlotRobot(ThreeDScene):
     def construct(self):
 
-        # DH parameters:
-        d_list = [0, 0, 0, 0.10915, 0.09465, 0.1]
-        a_list = [-0.425, 0, -0.39225, 0, 0.08, 0]
-        alpha_list = [1, -1, 0, 1, -1, 0]
+        # # DH parameters:
+        # d_list = [0, 0, 0, 0.10915, 0.09465, 0.1]
+        # a_list = [-0.425, 0, -0.39225, 0, 0.08, 0]
+        # alpha_list = [1, -1, 0, 1, -1, 0]
+        #
+        # # Set 2
+        # d_list = [0, 0, 0, 0.10915, 0.09465, 0.1]
+        # a_list = [0, -0.425, -0.39225, 0.08, 0, 0]
+        # alpha_list = [1, -1, 0, 1, -1, 0]
+        #
+        # # Set 3
+        # d_list = [0, 0, 0, 0.10915, 0.09465, 0]
+        # a_list = [0, -0.425, -0.39225, 0, 0, 0]
+        # alpha_list = [1, 0, 0, 1, -1, 0]
 
-        # Set 2
-        d_list = [0, 0, 0, 0.10915, 0.09465, 0.1]
-        a_list = [0, -0.425, -0.39225, 0.08, 0, 0]
-        alpha_list = [1, -1, 0, 1, -1, 0]
-
-        # Set 3
-        d_list = [0, 0, 0, 0.10915, 0.09465, 0]
-        a_list = [0, -0.425, -0.39225, 0, 0, 0]
-        alpha_list = [1, 0, 0, 1, -1, 0]
-
-        # Set 3
+        # Set 4
         d_list = [0, 0.10915, 0, 0.10915, 0.09465, 0]
         a_list = [0, 0, -0.39225, -0.425, 0, 0]
         alpha_list = [1, 0, 0, 0, -1, 0]
 
-        # Set 4
+        # # Set 5
         # d_list = [0, 0.10915, 0, 0.10915, 0.09465, 0]
         # a_list = [0.10515, 0, -0.39225, 0, -0.425, 0]
         # alpha_list = [0, 1, 0, -1, 0, 0]
