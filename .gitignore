@@ -1,0 +1,15 @@
+# media files
+*.png
+*.mp4
+*.tex
+*.aux
+*.dvi
+*.svg
+*.log
+
+# media folders
+/manimlib/
+/Jaco/media
+/cuspidal_robots/media
+/2UPS/media
+/.idea/
