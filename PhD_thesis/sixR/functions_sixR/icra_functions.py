@@ -3,7 +3,7 @@ import sympy
 from manim import *
 from manim.opengl import *
 import numpy.linalg as la
-from icra_supplementary import *
+from .icra_supplementary import *
 
 
 def get_Background(title=None, page=None):
@@ -13,7 +13,7 @@ def get_Background(title=None, page=None):
     top_line = Line(start=[-7, 3.2, 0], end=[7, 3.2, 0], stroke_width=0.5)
 
     icra_L2 = ImageMobject("icra23_logo.png").scale(0.32).move_to([-6, 3.5, 0])
-    ls2n = ImageMobject("ls2n_logo.png").scale(0.1).move_to([6, 3.5, 0])
+    ls2n = ImageMobject("ls2n_logo.png").scale(0.06).move_to([6, 3.5, 0])
     top_title = None
     page_num = None
 

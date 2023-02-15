@@ -1,9 +1,15 @@
-from functions_durgesh.robot_functions import make_paths
-from functions_durgesh.maple_functions import *
-from functions_durgesh.icra_functions import *
+from manim import *
 import pandas as pd
 from manim.utils.color import GREEN, GOLD_A
+from functions_sixR.robot_functions import make_paths
+from functions_sixR.icra_functions import get_Background
+from functions_sixR.maple_functions import *
+from functions_sixR.robot_functions import *
 
+import sys
+sys.path.append('D:\\manim_durgesh\\PhD_thesis\\sixR\\resources\\images')
+sys.path.append('D:\\manim_durgesh\\PhD_thesis\\sixR\\resources\\data\\data_jaco')
+sys.path.append('D:\\manim_durgesh\\PhD_thesis\\sixR\\resources\\data\\icra_vectors')
 
 class MakeTitle(Scene):
     def construct(self):
@@ -12,8 +18,8 @@ class MakeTitle(Scene):
                       r"Philippe Wenger$^1$").next_to(title, DOWN).scale(0.6)
         affiliations = Tex(r"$^1$ Laboratoire des Sciences du Numerique de Nantes, France").next_to(authors,
                                                                                                     DOWN).scale(0.45)
-        icra_L = ImageMobject("pics/icra23_logo.png").scale(0.8).move_to([-2, 2.5, 0])
-        ls2n = ImageMobject("pics/ls2n_logo.png").scale(0.2).move_to([2, 2.5, 0])
+        icra_L = ImageMobject("icra23_logo.png").scale(0.8).move_to([-2, 2.5, 0])
+        ls2n = ImageMobject("ls2n_logo.png").scale(0.2).move_to([2, 2.5, 0])
 
         self.add(*[iter2 for iter2 in [title, authors, icra_L, affiliations, ls2n]])
         self.wait()
@@ -23,7 +29,7 @@ class MakeTitle(Scene):
         bottom_line = Line(start=[-7, -3.5, 0], end=[7, -3.5, 0], stroke_width=0.5)
         top_line = Line(start=[-7, 3.2, 0], end=[7, 3.2, 0], stroke_width=0.5)
         icra_L2 = icra_L.copy().scale(0.4).move_to([-6, 3.5, 0])
-        ls2n2 = ImageMobject("pics/ls2n_logo.png").scale(0.1).move_to([6, 3.5, 0])
+        ls2n2 = ImageMobject("ls2n_logo.png").scale(0.06).move_to([6, 3.5, 0])
         self.play(*[FadeOut(k) for k in [authors, affiliations]])
         self.play(*[Transform(k, j) for k, j in zip([title, icra_L, ls2n], [bottom_title, icra_L2, ls2n2])],
                   Create(top_line),

@@ -1,6 +1,3 @@
-from functions_durgesh.icra_functions import *
-
-
 class MakeTitle(Scene):
     def construct(self):
         title = Tex(r"Design optimization of a parallel manipulator for otological surgery").scale(0.8).shift(UP)

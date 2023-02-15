@@ -1,9 +1,6 @@
 import manim.utils.paths
 import pandas as pd
 
-from functions_durgesh.icra_functions import *
-from functions_durgesh.maple_functions import *
-
 
 class Temp(Scene):
     def construct(self):

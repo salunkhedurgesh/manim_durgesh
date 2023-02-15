@@ -1,8 +1,6 @@
+from manim import *
+from manim.opengl import *
 import math
-
-from functions_durgesh.robot_functions import *
-from functions_durgesh.icra_supplementary import *
-from functions_durgesh.master_thesis_functions import *
 
 """
 Note : The main difference between Transform and ReplacementTransform
@@ -221,8 +219,6 @@ class GenerateHyperboloid(ThreeDScene):
 class TempCheck2(ThreeDScene):
     def construct(self):
         self.camera.set_euler_angles(phi=75 * DEGREES, theta=30 * DEGREES)
-        frame2 = get_Frame([0, 0, 0], np.eye(4))
-        self.add(frame2)
         a, c = 1, 1
         hyperboloid = OpenGLSurface(
             lambda u, v: np.array([
