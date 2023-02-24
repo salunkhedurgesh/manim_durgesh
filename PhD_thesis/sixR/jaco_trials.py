@@ -1,5 +1,15 @@
+import sys
+sys.path.append('D:\\manim_durgesh\\')
+sys.path.append('D:\\manim_durgesh\\PhD_thesis\\sixR\\resources\\images')
+sys.path.append('D:\\manim_durgesh\\PhD_thesis\\sixR\\resources\\data\\data_jaco')
+sys.path.append('D:\\manim_durgesh\\PhD_thesis\\sixR\\resources\\data\\icra_vectors')
+
+from manim import *
 import manim.utils.paths
 import pandas as pd
+from functions_sixR.robot_functions import make_paths
+from functions_sixR.icra_functions import get_Background
+from functions_sixR.maple_functions import return_intermediate, jac3R
 
 
 class Temp(Scene):
@@ -66,7 +76,7 @@ class PlanePlot(Scene):
         # object definition
 
         # Graph with Number Plane
-        plane1 = NumberPlane(x_range=[-3.2, 3.2], y_range=[-3.2, 3.2], x_length=6.4, y_length=6.4,
+        plane1 = NumberPlane(x_range=[-3.2, 3.2], y_range=[-3.2, 3.2], x_length=6, y_length=6,
                              background_line_style={
                                  "stroke_color": TEAL,
                                  "stroke_width": 0.1,
@@ -77,10 +87,10 @@ class PlanePlot(Scene):
         curve = plane1.plot_implicit_curve(lambda t2, t3: -3 * (3 * np.cos(t3) + 4) * (
                 np.sin(t3) * (2 + 4 * np.cos(t2)) - 2 * np.cos(t2) * np.cos(t3)), color=DARK_BLUE)
 
-        x_box = Line([-3.2, 3.2, 0], [3.2, 3.2, 0], stroke_width=plane1.x_axis.get_stroke_width())
-        y_box = Line([3.2, -3.2, 0], [3.2, 3.2, 0], stroke_width=plane1.x_axis.get_stroke_width())
-        plane1.y_axis.shift(LEFT * 3.2)
-        plane1.x_axis.shift(DOWN * 3.2)
+        x_box = Line([-3, 3, 0], [3, 3, 0], stroke_width=plane1.x_axis.get_stroke_width())
+        y_box = Line([3, -3, 0], [3, 3, 0], stroke_width=plane1.x_axis.get_stroke_width())
+        plane1.y_axis.shift(LEFT * 3)
+        plane1.x_axis.shift(DOWN * 3)
         plane1.add_coordinates(range(-3, 4), range(-3, 4))
         plane1.coordinate_labels[1][0:3].shift(LEFT * 0.5)
         plane1.coordinate_labels[1][3:7].shift(LEFT * 0.35)
@@ -96,9 +106,9 @@ class PlanePlot(Scene):
         for t2_i in np.arange(-3.2, 3.21, 0.05):
             for t3_i in np.arange(-3.2, 3.21, 0.05):
                 if jac3R([0, t2_i, t3_i], [0, 1, 0], [1, 2, 3 / 2], [np.pi / 2, np.pi / 2, 0]) < 0:
-                    neg_det.append(Dot(radius=0.025, color=RED).move_to(np.array([t2_i, t3_i, 0])))
+                    neg_det.append(Dot(radius=0.025, color=RED).move_to(np.array([t2_i*3/3.2, t3_i*3/3.2, 0])))
                 else:
-                    pos_det.append(Dot(radius=0.025, color=GREEN).move_to(np.array([t2_i, t3_i, 0])))
+                    pos_det.append(Dot(radius=0.025, color=GREEN).move_to(np.array([t2_i*3/3.2, t3_i*3/3.2, 0])))
 
         sing_text = Tex("Singularities \\\\ det$(\\mathbf{J}) = 0$", font_size=36).move_to(np.array([-0.25, 2.5, 0]))
         arrow1 = Arrow(start=sing_text.get_bottom(), end=[0, 0.6, 0])
@@ -130,7 +140,7 @@ class PlanePlot(Scene):
         self.wait()
         self.clear()
         self.add(total_graph)
-        self.play(ReplacementTransform(total_graph, total_graph.copy().scale(0.6).shift(LEFT*2.9 + UP * 0.05)))
+        self.play(ReplacementTransform(total_graph, total_graph.copy().scale(0.7).shift(LEFT*2.9 + UP * 0.05)))
 
 
 def my_det(t2, t3):
@@ -214,19 +224,19 @@ class PlanePlot2(Scene):
         det_point = Dot(color=LIGHT_BROWN).move_to(plane2.c2p(0, my_det(solution_set[0][0], solution_set[0][1])))
         # offset = first_solution.get_center()
 
-        nscs_confirm = Tex(r"""\begin{minipage}{8cm}\centering The nonsingular change of solution can be confirmed 
-        with the determinant value as it does not change signs\end{minipage}""", font_size=36).to_edge(DOWN, buff=0.5)
+        nscs_confirm = Tex(r"""\begin{minipage}{10cm}\centering The nonsingular change of solution can be confirmed 
+        with the determinant value as it does not change signs\end{minipage}""", font_size=36).to_edge(DOWN, buff=0.7)
 
         # animations
         self.add(plane1)
         self.play(FadeIn(curve))
         self.wait()
-        self.add(first_map, second_map, third_map, fourth_map, pose_point)
+        # self.add(first_map, second_map, third_map, fourth_map, pose_point)
         self.add(four_solution_text)
         self.add(*[TracedPath(k.get_center, stroke_width=2, stroke_color=k2, dissipating_time=0.5,
                               stroke_opacity=0.6) for (k, k2) in zip([first_map, second_map, third_map, fourth_map],
                                                                      [ORANGE, YELLOW, BLUE, RED])])
-        self.play(*[ReplacementTransform(i2, pose_point, run_time=2) for i2 in [first_map, second_map,
+        self.play(*[ReplacementTransform(pose_point.copy(), i2, run_time=2) for i2 in [first_map, second_map,
                                                                                 third_map, fourth_map]])
         self.wait()
         self.clear()

@@ -1,4 +1,14 @@
+import sys
+
+sys.path.append('D:\\manim_durgesh\\')
+sys.path.append('D:\\manim_durgesh\\PhD_thesis\\sixR\\resources\\images\\')
+sys.path.append('D:\\manim_durgesh\\PhD_thesis\\sixR\\resources\\data\\data_jaco\\')
+sys.path.append('D:\\manim_durgesh\\PhD_thesis\\sixR\\resources\\data\\icra_vectors\\')
+
+from manim import *
 import pandas as pd
+from functions_sixR.robot_functions import make_paths, adapt_2Pi, get_interpolation_vector, get_RobotInstance, \
+    get_FrameMatrix, get_solution
 
 
 class AnimateRobot(ThreeDScene):
@@ -94,7 +104,7 @@ class AnimateRegular3(ThreeDScene):
         d_list = [number / 100 for number in d_list]
         a_list = [number / 100 for number in a_list]
 
-        df_n = pd.read_csv("D:\durghy_manim\Jaco\saved_data_theta1.csv")
+        df_n = pd.read_csv("D:/manim_durgesh/PhD_thesis/sixR/resources/data/data_jaco/saved_data_theta1.csv")
         paths = make_paths(df_n, thresh=0.1)
 
         offset = -2
@@ -146,7 +156,7 @@ class AnimateError(ThreeDScene):
         d_list = [number / 100 for number in d_list]
         a_list = [number / 100 for number in a_list]
 
-        df_n = pd.read_csv("D:\durghy_manim\Jaco\saved_data_theta1.csv")
+        df_n = pd.read_csv("D:/manim_durgesh/PhD_thesis/sixR/resources/data/data_jaco/saved_data_theta1.csv")
         paths = make_paths(df_n, thresh=0.1)
         point1_comp = np.array(get_solution(len(paths[2]) - 1, paths[2][len(paths[2]) - 1], 1))
         point5_comp = np.array(get_solution(len(paths[2]) - 1, paths[3][len(paths[2]) - 1], 1))
@@ -154,8 +164,8 @@ class AnimateError(ThreeDScene):
         theta_list = adapt_2Pi(point1_comp)
         theta_list2 = adapt_2Pi(point5_comp)
 
-        each_iteration = 10
-        total_iterations = 10
+        each_iteration = 50
+        total_iterations = 50
         offset = -2
         # key_points = [theta_list, theta_list_inter1, theta_list_inter2, theta_list2]
         key_points = [theta_list, theta_list2]
@@ -236,7 +246,7 @@ class AnimateNSCS(ThreeDScene):
         d_list = [number / 100 for number in d_list]
         a_list = [number / 100 for number in a_list]
 
-        df_n = pd.read_csv("D:\durghy_manim\Jaco\saved_data_neg_theta1.csv")
+        df_n = pd.read_csv("D:/manim_durgesh/PhD_thesis/sixR/resources/data/data_jaco/saved_data_neg_theta1.csv")
         paths2 = make_paths(df_n, thresh=0.1)
 
         offset = -2
@@ -288,7 +298,7 @@ class AnimateErrorB(ThreeDScene):
         d_list = [number / 100 for number in d_list]
         a_list = [number / 100 for number in a_list]
 
-        df_n = pd.read_csv("D:\durghy_manim\Jaco\saved_data_neg_theta1.csv")
+        df_n = pd.read_csv("D:/manim_durgesh/PhD_thesis/sixR/resources/data/data_jaco/saved_data_neg_theta1.csv")
         paths2 = make_paths(df_n, thresh=0.1)
 
         offset = -2
@@ -420,7 +430,6 @@ class AnimateRobot_Gen3(ThreeDScene):
 
 class PlotRobot(ThreeDScene):
     def construct(self):
-
         # # DH parameters:
         # d_list = [0, 0, 0, 0.10915, 0.09465, 0.1]
         # a_list = [-0.425, 0, -0.39225, 0, 0.08, 0]

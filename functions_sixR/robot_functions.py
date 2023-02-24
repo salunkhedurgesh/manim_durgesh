@@ -1,9 +1,14 @@
-import numpy as np
+import sys
+
+sys.path.append('D:\\manim_durgesh\\')
+sys.path.append('D:\\manim_durgesh\\PhD_thesis\\sixR\\resources\\images\\')
+sys.path.append('D:\\manim_durgesh\\PhD_thesis\\sixR\\resources\\data\\data_jaco\\')
+sys.path.append('D:\\manim_durgesh\\PhD_thesis\\sixR\\resources\\data\\icra_vectors\\')
+
 from manim import *
 from manim.opengl import *
 import numpy.linalg as la
 import pandas as pd
-
 
 def get_axis_angle(v1, v2):
     if isinstance(v1, list) or isinstance(v2, list):
@@ -342,19 +347,19 @@ def get_saved_mat(df, to_save=None, return_data=False):
 
 def make_total_paths():
     path_record = []
-    df1 = get_saved_mat(pd.read_csv("icra_vectors/21_9_pos_theta1_8648.csv"), return_data=True)
-    df2 = get_saved_mat(pd.read_csv("icra_vectors/21_9_pos_theta2_8648.csv"), return_data=True)
-    df3 = get_saved_mat(pd.read_csv("icra_vectors/21_9_pos_theta3_8648.csv"), return_data=True)
-    df4 = get_saved_mat(pd.read_csv("icra_vectors/21_9_pos_theta4_8648.csv"), return_data=True)
-    df5 = get_saved_mat(pd.read_csv("icra_vectors/21_9_pos_theta5_8648.csv"), return_data=True)
-    df6 = get_saved_mat(pd.read_csv("icra_vectors/21_9_pos_theta6_8648.csv"), return_data=True)
+    df1 = get_saved_mat(pd.read_csv("D:/manim_durgesh/PhD_thesis/sixR/resources/data/icra_vectors/21_9_pos_theta1_8648.csv"), return_data=True)
+    df2 = get_saved_mat(pd.read_csv("D:/manim_durgesh/PhD_thesis/sixR/resources/data/icra_vectors/21_9_pos_theta2_8648.csv"), return_data=True)
+    df3 = get_saved_mat(pd.read_csv("D:/manim_durgesh/PhD_thesis/sixR/resources/data/icra_vectors/21_9_pos_theta3_8648.csv"), return_data=True)
+    df4 = get_saved_mat(pd.read_csv("D:/manim_durgesh/PhD_thesis/sixR/resources/data/icra_vectors/21_9_pos_theta4_8648.csv"), return_data=True)
+    df5 = get_saved_mat(pd.read_csv("D:/manim_durgesh/PhD_thesis/sixR/resources/data/icra_vectors/21_9_pos_theta5_8648.csv"), return_data=True)
+    df6 = get_saved_mat(pd.read_csv("D:/manim_durgesh/PhD_thesis/sixR/resources/data/icra_vectors/21_9_pos_theta6_8648.csv"), return_data=True)
 
-    df7 = get_saved_mat(pd.read_csv("icra_vectors/21_9_neg_theta1_8648.csv"), return_data=True)
-    df8 = get_saved_mat(pd.read_csv("icra_vectors/21_9_neg_theta2_8648.csv"), return_data=True)
-    df9 = get_saved_mat(pd.read_csv("icra_vectors/21_9_neg_theta3_8648.csv"), return_data=True)
-    df10 = get_saved_mat(pd.read_csv("icra_vectors/21_9_neg_theta4_8648.csv"), return_data=True)
-    df11 = get_saved_mat(pd.read_csv("icra_vectors/21_9_neg_theta5_8648.csv"), return_data=True)
-    df12 = get_saved_mat(pd.read_csv("icra_vectors/21_9_neg_theta6_8648.csv"), return_data=True)
+    df7 = get_saved_mat(pd.read_csv("D:/manim_durgesh/PhD_thesis/sixR/resources/data/icra_vectors/21_9_neg_theta1_8648.csv"), return_data=True)
+    df8 = get_saved_mat(pd.read_csv("D:/manim_durgesh/PhD_thesis/sixR/resources/data/icra_vectors/21_9_neg_theta2_8648.csv"), return_data=True)
+    df9 = get_saved_mat(pd.read_csv("D:/manim_durgesh/PhD_thesis/sixR/resources/data/icra_vectors/21_9_neg_theta3_8648.csv"), return_data=True)
+    df10 = get_saved_mat(pd.read_csv("D:/manim_durgesh/PhD_thesis/sixR/resources/data/icra_vectors/21_9_neg_theta4_8648.csv"), return_data=True)
+    df11 = get_saved_mat(pd.read_csv("D:/manim_durgesh/PhD_thesis/sixR/resources/data/icra_vectors/21_9_neg_theta5_8648.csv"), return_data=True)
+    df12 = get_saved_mat(pd.read_csv("D:/manim_durgesh/PhD_thesis/sixR/resources/data/icra_vectors/21_9_neg_theta6_8648.csv"), return_data=True)
 
     child_df = pd.DataFrame(columns=['instance', 'IKS', 'theta1', 'theta2', 'theta3', 'theta4', 'theta5', 'theta6'])
     child_df2 = pd.DataFrame(columns=['instance', 'IKS', 'theta1', 'theta2', 'theta3', 'theta4', 'theta5', 'theta6'])
@@ -366,15 +371,15 @@ def make_total_paths():
             child_df2.loc[len(child_df2)] = [i2 + 1, i3, df7.iloc[i2, i3], df8.iloc[i2, i3], df9.iloc[i2, i3],
                                              df10.iloc[i2, i3], df11.iloc[i2, i3], df12.iloc[i2, i3]]
 
-    child_df.to_csv("positive_child.csv")
-    child_df2.to_csv("negative_child.csv")
+    child_df.to_csv("D:/manim_durgesh/PhD_thesis/sixR/resources/data/data_jaco/positive_child.csv")
+    child_df2.to_csv("D:/manim_durgesh/PhD_thesis/sixR/resources/data/data_jaco/negative_child.csv")
 
 
 def get_solution(instance, t1_val, det_sign):
     if det_sign == 1:
-        df = pd.read_csv("positive_child.csv")
+        df = pd.read_csv("D:/manim_durgesh/PhD_thesis/sixR/resources/data/data_jaco/positive_child.csv")
     else:
-        df = pd.read_csv("negative_child.csv")
+        df = pd.read_csv("D:/manim_durgesh/PhD_thesis/sixR/resources/data/data_jaco/negative_child.csv")
 
     df2 = df.loc[df['instance'] == instance]
     cur_diff = 0.5

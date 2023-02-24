@@ -1,6 +1,15 @@
-from PhD_thesis.threeR.functions_threeR import make_paths
-import pandas as pd
+import sys
+sys.path.append('D:\\manim_durgesh\\')
+sys.path.append('D:\\manim_durgesh\\PhD_thesis\\sixR\\resources\\images')
+sys.path.append('D:\\manim_durgesh\\PhD_thesis\\sixR\\resources\\data\\data_jaco')
+sys.path.append('D:\\manim_durgesh\\PhD_thesis\\sixR\\resources\\data\\icra_vectors')
 
+from manim import *
+import manim.utils.paths
+import pandas as pd
+from functions_sixR.robot_functions import make_paths
+from functions_sixR.icra_functions import get_Background
+from functions_sixR.maple_functions import return_intermediate, jac3R, static_pref_jacdet
 
 def my_det(t2, t3):
     inter_val = [0, t2, t3]
@@ -356,38 +365,38 @@ class PosPlotT(Scene):
             nh = len(paths[2]) - 1
             eh = paths[3][nh] - paths[2][nh]
             self.play(Transform(point_plot, point_plot.move_to(
-                plane2.c2p((nh * path_length / 724), paths[2][nh] + (eh * i2 / 10))), run_time=0.05))
+                plane2.c2p((nh * path_length / 724), paths[2][nh] + (eh * i2 / 10))), run_time=1))
         self.wait(2)
-        self.add(TracedPath(point_plot2.get_center, stroke_width=5, stroke_color=RED_C, dissipating_time=0.2))
-        self.FadeInFadeOut(second_choice, wait_time=2)
-        for i2 in np.arange(1, len(paths[0]) - 1, 4):
-            self.play(Transform(point_plot2, point_plot2.move_to(
-                plane2.c2p((i2 * path_length / 724), paths[0][i2])), run_time=0.2))
-        self.play(Create(second_transition))
-        self.play(FadeIn(second_nom))
-        self.FadeInFadeOut(zp_present2, wait_time=5)
-        self.FadeInFadeOut(sp_present, wait_time=5)
-        self.wait(2)
-
-        self.add(TracedPath(point_plot3.get_center, stroke_width=5, stroke_color=GREEN))
-        self.add(TracedPath(point_plot4.get_center, stroke_width=5, stroke_color=GREEN))
-        self.FadeInFadeOut(third_choice, wait_time=2)
-        for i2 in np.arange(1, len(paths[1]) - 1, 8):
-            if i2 > 724 - 74 and show_three:
-                show_three = False
-                self.wait()
-                self.play(Create(third_transition))
-                self.wait()
-                self.play(FadeIn(third_nom))
-                self.FadeInFadeOut(zp_present3, wait_time=5)
-            self.play(Transform(point_plot3, point_plot3.move_to(
-                plane2.c2p((i2 * path_length / 724), paths[1][i2])), run_time=0.05))
-            self.play(Transform(point_plot4, point_plot4.move_to(
-                plane2.c2p((i2 * path_length / 724), paths[3][i2])), run_time=0.05))
-        self.wait()
-        self.FadeInFadeOut(tp_present, wait_time=5)
-
-        self.wait(2)
+            # self.add(TracedPath(point_plot2.get_center, stroke_width=5, stroke_color=RED_C, dissipating_time=0.2))
+            # self.FadeInFadeOut(second_choice, wait_time=2)
+            # for i2 in np.arange(1, len(paths[0]) - 1, 4):
+            #     self.play(Transform(point_plot2, point_plot2.move_to(
+            #         plane2.c2p((i2 * path_length / 724), paths[0][i2])), run_time=0.2))
+            # self.play(Create(second_transition))
+            # self.play(FadeIn(second_nom))
+            # self.FadeInFadeOut(zp_present2, wait_time=5)
+            # self.FadeInFadeOut(sp_present, wait_time=5)
+            # self.wait(2)
+            #
+            # self.add(TracedPath(point_plot3.get_center, stroke_width=5, stroke_color=GREEN))
+            # self.add(TracedPath(point_plot4.get_center, stroke_width=5, stroke_color=GREEN))
+            # self.FadeInFadeOut(third_choice, wait_time=2)
+            # for i2 in np.arange(1, len(paths[1]) - 1, 8):
+            #     if i2 > 724 - 74 and show_three:
+            #         show_three = False
+            #         self.wait()
+            #         self.play(Create(third_transition))
+            #         self.wait()
+            #         self.play(FadeIn(third_nom))
+            #         self.FadeInFadeOut(zp_present3, wait_time=5)
+            #     self.play(Transform(point_plot3, point_plot3.move_to(
+            #         plane2.c2p((i2 * path_length / 724), paths[1][i2])), run_time=0.05))
+            #     self.play(Transform(point_plot4, point_plot4.move_to(
+            #         plane2.c2p((i2 * path_length / 724), paths[3][i2])), run_time=0.05))
+            # self.wait()
+            # self.FadeInFadeOut(tp_present, wait_time=5)
+            #
+            # self.wait(2)
         # self.clear()
         # complete_set1 = Group(plane2, point_plot, point_plot2, *full_path2, first_transition, second_transition)
         # self.add(complete_set1)

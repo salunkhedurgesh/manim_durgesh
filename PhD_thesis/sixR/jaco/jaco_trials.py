@@ -1,5 +1,9 @@
+from manim import *
+
+
 import manim.utils.paths
 import pandas as pd
+
 
 
 class Temp(Scene):

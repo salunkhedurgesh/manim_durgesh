@@ -1,15 +1,17 @@
-from manim import *
-import pandas as pd
-from manim.utils.color import GREEN, GOLD_A
-from functions_sixR.robot_functions import make_paths
-from functions_sixR.icra_functions import get_Background
-from functions_sixR.maple_functions import *
-from functions_sixR.robot_functions import *
-
 import sys
+import pandas as pd
+
+sys.path.append('D:\\manim_durgesh\\')
 sys.path.append('D:\\manim_durgesh\\PhD_thesis\\sixR\\resources\\images')
 sys.path.append('D:\\manim_durgesh\\PhD_thesis\\sixR\\resources\\data\\data_jaco')
 sys.path.append('D:\\manim_durgesh\\PhD_thesis\\sixR\\resources\\data\\icra_vectors')
+
+from manim import *
+from manim.utils.color import GREEN, GOLD_A
+from functions_sixR.robot_functions import make_paths
+from functions_sixR.icra_functions import get_Background
+from functions_sixR.maple_functions import return_intermediate, static_pref_jacdet, jac3R, min_dettraj
+
 
 class MakeTitle(Scene):
     def construct(self):
@@ -362,9 +364,9 @@ class PosPlot(Scene):
         self.play(*[FadeIn(k4) for k4 in full_path2])
         self.play(*[FadeIn(k4) for k4 in full_path22])
 
-        self.FadeInFadeOut(four_choices)
+        # self.FadeInFadeOut(four_choices)
         self.FadeIt(*full_path22)
-        self.FadeInFadeOut(point_plotb, point_plot2b, point_plot3b, point_plot4b)
+        # self.FadeInFadeOut(point_plotb, point_plot2b, point_plot3b, point_plot4b)
 
         self.wait()
         self.add(TracedPath(point_plot.get_center, stroke_width=5, stroke_color=GOLD_A))
@@ -382,7 +384,7 @@ class PosPlot(Scene):
         self.FadeInFadeOut(second_choice, wait_time=2)
         for i2 in np.arange(1, len(paths[0]) - 1, 4):
             self.play(Transform(point_plot2, point_plot2.move_to(
-                np.array([(i2 * path_length / 724) - path_length / 2, paths[0][i2], 0])), run_time=0.2))
+                np.array([(i2 * path_length / 724) - path_length / 2, paths[0][i2], 0])), run_time=1))
         self.play(Create(second_transition))
         self.play(FadeIn(second_nom))
         self.FadeInFadeOut(zp_present2, wait_time=5)
@@ -554,7 +556,6 @@ class JacDetPlot(Scene):
         det_point = Dot(color=LIGHT_BROWN).move_to(
             plane2.c2p(0, my_det6R(start_index, end_index, cur_iter=0, total_iter=50)))
 
-
         jac_cusp = Tex(r"""\begin{minipage}{8cm}\centering JACO robot is a cuspidal robot\end{minipage}""",
                        font_size=36).to_edge(RIGHT).shift(UP)
         jac_cusp1 = Tex(r"""\begin{minipage}{8cm}\begin{itemize} \item Maximum 12 IKS have been found 
@@ -570,6 +571,7 @@ class JacDetPlot(Scene):
         self.play(FadeIn(jac_cusp))
         self.wait(2)
         self.play(FadeIn(jac_cusp1))
+        self.wait(2.5)
 
         self.clear()
         self.add(*get_Background("JACO robot is cuspidal"))
@@ -722,6 +724,11 @@ class TotalPlot(ZoomedScene):
             r"""\begin{minipage}{7 cm} \centering We begin from a pose with 8 IKS \\ 
             (4 IKS in each aspect) \end{minipage}""").shift(UP * 1.5)
 
+        cn = Tex(r"""blue\\ $\det(\mathbf{J}) > 0$ \\~\\ red\\ $\det(\mathbf{J}) < 0$""",
+                                 font_size=28).to_edge(LEFT, buff=0.1).shift(DOWN * 2)
+        bkg_cn = Rectangle(width=cn.width+0.1, height=cn.height + 0.1, stroke_width=1).move_to(cn.get_center())
+
+        color_notification = Group(cn, bkg_cn)
         # animations
 
         self.FadeInFadeOut(first_text)
@@ -731,6 +738,7 @@ class TotalPlot(ZoomedScene):
         self.wait()
         self.add(*zoom_path, *zoom_path2, *full_path, *full_path2)
         self.wait()
+        self.play(FadeIn(color_notification))
         self.add(point_plotc, point_plot2c, point_plot3c, point_plot4c)
         self.FadeInFadeOut(second_text3, wait_time=2)
         self.play(*[Transform(k, k.copy().shift(RIGHT * path_length), run_time=2) for k in
@@ -740,7 +748,7 @@ class TotalPlot(ZoomedScene):
                     [point_plotc, point_plot2c, point_plot3c, point_plot4c, point_plot5c, point_plot6c, point_plot7c,
                      point_plot8c]])
         self.activate_zooming(animate=True)
-
+        #
         self.remove(*zoom_path2, *zoom_path)
         self.add(*zoom_pathD, *zoom_pathD2)
         self.wait(2)
@@ -750,7 +758,7 @@ class TotalPlot(ZoomedScene):
         self.add(plane2, *zoom_path, *zoom_path2, *full_path, *full_path2)
         # self.wait(5)
 
-        self.FadeInFadeOut(third_text, wait_time=2)
+        # self.FadeInFadeOut(third_text, wait_time=2)
         for i2 in [1, 5, 4, 0, 3, 2]:
             self.play(FadeIn(t1[i2]))
             self.wait(0.3)
