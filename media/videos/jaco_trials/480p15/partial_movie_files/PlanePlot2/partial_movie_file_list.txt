@@ -1,0 +1,5 @@
+# This file is used internally by FFMPEG.
+file 'file:D:/manim_durgesh/media/videos/jaco_trials/480p15/partial_movie_files/PlanePlot2/3163782288_4223655830_2888429547.mp4'
+file 'file:D:/manim_durgesh/media/videos/jaco_trials/480p15/partial_movie_files/PlanePlot2/2201830969_3837998516_3371613469.mp4'
+file 'file:D:/manim_durgesh/media/videos/jaco_trials/480p15/partial_movie_files/PlanePlot2/2201830969_544867476_1631282590.mp4'
+file 'file:D:/manim_durgesh/media/videos/jaco_trials/480p15/partial_movie_files/PlanePlot2/2201830969_87370825_4147920353.mp4'

@@ -1,0 +1,9 @@
+# This file is used internally by FFMPEG.
+file 'file:D:/manim_durgesh/media/videos/Jaco_2D/480p15/partial_movie_files/Contents/3163782288_4005827452_1240787880.mp4'
+file 'file:D:/manim_durgesh/media/videos/Jaco_2D/480p15/partial_movie_files/Contents/2201830969_1149804837_3823029067.mp4'
+file 'file:D:/manim_durgesh/media/videos/Jaco_2D/480p15/partial_movie_files/Contents/2201830969_2325825418_1331719520.mp4'
+file 'file:D:/manim_durgesh/media/videos/Jaco_2D/480p15/partial_movie_files/Contents/2201830969_1149804837_2298013186.mp4'
+file 'file:D:/manim_durgesh/media/videos/Jaco_2D/480p15/partial_movie_files/Contents/2201830969_4132551714_1319614668.mp4'
+file 'file:D:/manim_durgesh/media/videos/Jaco_2D/480p15/partial_movie_files/Contents/2201830969_1149804837_473814470.mp4'
+file 'file:D:/manim_durgesh/media/videos/Jaco_2D/480p15/partial_movie_files/Contents/2201830969_968871694_4159091832.mp4'
+file 'file:D:/manim_durgesh/media/videos/Jaco_2D/480p15/partial_movie_files/Contents/2201830969_1149804837_831444731.mp4'
